@@ -21,9 +21,13 @@ class DatabaseSeeder extends Seeder
 
         ]);
         
-            $this->call([
-            HangeulDataSeeder::class,
+            
+        $this->call([
+            JenisSeeder::class,
         ]);
+
+        
+        
     }
 
     

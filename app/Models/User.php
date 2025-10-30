@@ -36,7 +36,7 @@ class User extends Authenticatable
     /**
      * Get the attributes that should be cast.
      *
-     * @return array<string, string>
+     * @return array<string
      */
     protected function casts(): array
     {
@@ -44,5 +44,18 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function pertanyaan()
+    {
+        return $this->belongsToMany(Pertanyaan::class, 'jawaban', 'id_user', 'id_pertanyaan')
+        ->withPivot('jawaban', 'tanggal')
+        ->withTimeStamp();
+
+    }
+
+    public function jawaban()
+    {
+        return $this->hasMany(Jawaban::class);
     }
 }

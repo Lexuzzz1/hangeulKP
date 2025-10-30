@@ -29,4 +29,4 @@
     <button type="submit">Daftar Sekarang</button>
     
     <p>Sudah punya akun? <a href="{{ route('login') }}">Login di sini</a></p>
-</form>[]
+</form>
