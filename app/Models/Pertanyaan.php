@@ -5,27 +5,26 @@ use Illuminate\Database\Eloquent\Model;
 class Pertanyaan extends Model
 {
     protected $table = 'pertanyaan';
+    
+
+    protected $primaryKey = 'id_pertanyaan'; 
+    
     protected $fillable = [
-        'id_pertanyaan',
-        'soal',
-        'a',
-        'b',
-        'c',
-        'd',
-        'jawaban',
-        'bobot',
-
+        'id_pertanyaan', 
+        'id_modul', 
+        'soal', 
+        'a', 'b', 'c', 'd', 
+        'jawaban', 
+        'bobot'
     ];
-    public function user()
-    {
-        return $this->belongsToMany(User::class, 'jawaban', 'id_user', 'id_pertanyaan')
-        ->withPivot('jawaban', 'tanggal')
-        ->withTimeStamp();
 
+    public function modul()
+    {
+        return $this->belongsTo(Modul::class, 'id_modul');
     }
 
-    public function jawaban()
+    public function jawabanUser()
     {
-        return $this->hasMany(Jawaban::class);
+        return $this->hasMany(Jawaban::class, 'id_pertanyaan');
     }
 }

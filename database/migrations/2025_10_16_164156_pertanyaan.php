@@ -10,12 +10,15 @@ return new class extends Migration
     {
         Schema::create('pertanyaan', function (Blueprint $table) {
             $table->id('id_pertanyaan');
-            $table->string('soal');
+            
+            $table->foreignId('id_modul')->constrained('modul', 'id_modul')->onDelete('cascade');
+            
+            $table->text('soal'); 
             $table->string('a');
             $table->string('b');
             $table->string('c');
             $table->string('d');
-            $table->string('jawaban');
+            $table->string('jawaban'); 
             $table->integer('bobot');
             $table->timestamps();
         });

@@ -12,13 +12,16 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+    protected $table = 'user'; 
+    protected $primaryKey = 'id_user'; 
+
     /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'nama',
         'email',
         'password',
     ];
@@ -36,7 +39,7 @@ class User extends Authenticatable
     /**
      * Get the attributes that should be cast.
      *
-     * @return array<string
+     * @return array<string, string>
      */
     protected function casts(): array
     {
@@ -46,16 +49,22 @@ class User extends Authenticatable
         ];
     }
 
+    // Relasi Many-to-Many ke Pertanyaan (Melalui tabel jawaban sebagai pivot)
     public function pertanyaan()
     {
         return $this->belongsToMany(Pertanyaan::class, 'jawaban', 'id_user', 'id_pertanyaan')
-        ->withPivot('jawaban', 'tanggal')
-        ->withTimeStamp();
-
+            ->withPivot('jawaban', 'tanggal')
+            ->withTimestamps(); 
     }
+
 
     public function jawaban()
     {
-        return $this->hasMany(Jawaban::class);
+        return $this->hasMany(Jawaban::class, 'id_user');
+    }
+
+    public function progres()
+    {
+        return $this->hasMany(Progres::class, 'id_user');
     }
 }
