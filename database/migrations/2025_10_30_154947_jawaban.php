@@ -14,13 +14,12 @@ return new class extends Migration
         Schema::create('jawaban', function (Blueprint $table) {
             $table->id('id_jawaban');
 
-            // Perbaikan Foreign Key ke User (Sesuai ERD: tabel 'user', id 'id_user')
             $table->foreignId('id_user')->constrained('user', 'id_user')->onDelete('cascade');
             
             $table->foreignId('id_pertanyaan')->constrained('pertanyaan', 'id_pertanyaan')->onDelete('cascade');
 
-            $table->string('jawaban'); // Jawaban user (A/B/C/D)
-            $table->timestamp('tanggal')->useCurrent(); // Otomatis isi waktu sekarang
+            $table->string('jawaban');
+            $table->timestamp('tanggal')->useCurrent(); 
 
             $table->timestamps();
         });
