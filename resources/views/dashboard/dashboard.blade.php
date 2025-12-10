@@ -6,7 +6,8 @@
     <title>Dashboard - Belajar Hangeul</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
+    
+    </head>
 <body class="bg-light">
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
@@ -21,7 +22,8 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown">
-                            Hi, {{ Auth::user()->nama }} </a>
+                            Hi, {{ Auth::user()->nama }}
+                        </a>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" href="#">Profil Saya</a></li>
                             <li><hr class="dropdown-divider"></li>
@@ -40,7 +42,7 @@
 
     <div class="container py-5">
         
-        <div class="row mb-4">
+        <div class="row mb-5">
             <div class="col-12">
                 <div class="card bg-white shadow-sm border-0">
                     <div class="card-body p-4">
@@ -52,31 +54,33 @@
         </div>
 
         <div class="row g-4">
-            <div class="col-md-4">
-                <div class="card h-100 border-0 shadow-sm hover-card">
-                    <div class="card-body text-center p-4">
-                        <div class="mb-3 text-primary">
-                            <i class="fa-solid fa-book-open fa-3x"></i>
+            
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-5 d-flex flex-column justify-content-center align-items-center"> 
+                        <div class="mb-4 text-primary bg-primary bg-opacity-10 p-4 rounded-circle">
+                            <i class="fa-solid fa-book-open fa-3x"></i> 
                         </div>
-                        <h4 class="card-title fw-bold">Materi Belajar</h4>
-                        <p class="card-text text-muted">Pelajari vokal dan konsonan Hangeul dari dasar hingga mahir.</p>
-                        <a href="#" class="btn btn-outline-primary w-100 mt-2">Mulai Belajar</a>
+                        <h3 class="card-title fw-bold">Materi Belajar</h3>
+                        <p class="card-text text-muted fs-5">Pelajari vokal dan konsonan Hangeul dari dasar hingga mahir.</p>
+                        <a href="{{ route('modul.index') }}" class="btn btn-primary btn-lg w-100 mt-auto rounded-pill px-5">Mulai Belajar</a>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-4">
-                <div class="card h-100 border-0 shadow-sm hover-card">
-                    <div class="card-body text-center p-4">
-                        <div class="mb-3 text-warning">
-                            <i class="fa-solid fa-pen-to-square fa-3x"></i>
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-5 d-flex flex-column justify-content-center align-items-center">
+                        <div class="mb-4 text-warning bg-warning bg-opacity-10 p-4 rounded-circle">
+                            <i class="fa-solid fa-pen-to-square fa-3x"></i> 
                         </div>
-                        <h4 class="card-title fw-bold">Latihan Kuis</h4>
-                        <p class="card-text text-muted">Uji pemahamanmu dengan kuis interaktif di setiap modul.</p>
-                        <a href="#" class="btn btn-outline-warning w-100 mt-2">Mulai Kuis</a>
+                        <h3 class="card-title fw-bold">Latihan Kuis</h3>
+                        <p class="card-text text-muted fs-5">Uji pemahamanmu dengan kuis interaktif di setiap modul.</p>
+                        <a href="#" class="btn btn-warning text-white btn-lg w-100 mt-auto rounded-pill px-5">Mulai Kuis</a>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 
