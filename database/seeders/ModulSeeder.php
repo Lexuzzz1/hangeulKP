@@ -26,7 +26,7 @@ class ModulSeeder extends Seeder
         // ==========================================
         Modul::create(['id_jenis' => $jVokal->id_jenis, 'nama_modul' => 'Modul 1: Huruf Vokal Dasar']);
         Modul::create(['id_jenis' => $jKonsonan->id_jenis, 'nama_modul' => 'Modul 2: Huruf Konsonan Dasar']);
-        Modul::create(['id_jenis' => $jGabungan->id_jenis, 'nama_modul' => 'Modul 3: Gabungan Huruf (Membaca Kata)']);
+        Modul::create(['id_jenis' => $jGabungan->id_jenis, 'nama_modul' => 'Modul 3: Gabungan Huruf']);
 
         // ==========================================
         // 3. INPUT DATA JAMO (HURUF)
@@ -62,6 +62,20 @@ class ModulSeeder extends Seeder
                 'hangeul'   => $k[0], 
                 'pelafalan' => $k[1], 
                 'id_jenis'  => $jKonsonan->id_jenis
+            ]);
+        }
+
+        // --- C. Gabungan Huruf (Syllables) ---
+        // Jamo untuk kategori Gabungan: 가, 나, 마, 다, 라
+        $gData = [
+            ['가', 'ga'], ['나', 'na'], ['마', 'ma'], ['다', 'da'], ['라', 'ra']
+        ];
+
+        foreach($gData as $g) {
+            Jamo::create([
+                'hangeul'   => $g[0], 
+                'pelafalan' => $g[1], 
+                'id_jenis'  => $jGabungan->id_jenis
             ]);
         }
 
@@ -130,6 +144,76 @@ class ModulSeeder extends Seeder
                 $a->id_jamo, 
                 $o->id_jamo, 
                 $i->id_jamo
+            ]);
+        }
+
+        // Kata 5: Eum-ma (음마 - Makanan)
+        // Gabungan: eu + m + m + a
+        $eu = Jamo::where('hangeul', 'ㅡ')->first();
+        $kata5 = Kata::create(['hangeul' => '음마', 'arti' => 'Makanan']);
+        if($eu && $m && $a) {
+            $kata5->hangeul()->attach([
+                $eu->id_jamo, 
+                $m->id_jamo, 
+                $m->id_jamo, 
+                $a->id_jamo
+            ]);
+        }
+
+        // Kata 6: Mi (미 - Aku)
+        // Gabungan: m + i
+        $kata6 = Kata::create(['hangeul' => '미', 'arti' => 'Saya']);
+        if($m && $i) {
+            $kata6->hangeul()->attach([
+                $m->id_jamo, 
+                $i->id_jamo
+            ]);
+        }
+
+        // Kata 7: Nae (내 - Milik saya)
+        // Gabungan: n + a + i
+        $kata7 = Kata::create(['hangeul' => '내', 'arti' => 'Milik saya']);
+        if($n && $a && $i) {
+            $kata7->hangeul()->attach([
+                $n->id_jamo, 
+                $a->id_jamo, 
+                $i->id_jamo
+            ]);
+        }
+
+        // Kata 8: Mun (문 - Pintu)
+        // Gabungan: m + u + n
+        $kata8 = Kata::create(['hangeul' => '문', 'arti' => 'Pintu']);
+        if($m && $u && $n) {
+            $kata8->hangeul()->attach([
+                $m->id_jamo, 
+                $u->id_jamo, 
+                $n->id_jamo
+            ]);
+        }
+
+        // Kata 9: Nun (눈 - Mata/Salju)
+        // Gabungan: n + u + n
+        $kata9 = Kata::create(['hangeul' => '눈', 'arti' => 'Mata / Salju']);
+        if($n && $u) {
+            $kata9->hangeul()->attach([
+                $n->id_jamo, 
+                $u->id_jamo, 
+                $n->id_jamo
+            ]);
+        }
+
+        // Kata 10: Noel (노을 - Senja)
+        // Gabungan: n + o + eu + l
+        $l = Jamo::where('hangeul', 'ㄹ')->first();
+        $yo = Jamo::where('hangeul', 'ㅛ')->first();
+        $kata10 = Kata::create(['hangeul' => '노을', 'arti' => 'Senja']);
+        if($n && $yo && $eu && $l) {
+            $kata10->hangeul()->attach([
+                $n->id_jamo, 
+                $yo->id_jamo, 
+                $eu->id_jamo, 
+                $l->id_jamo
             ]);
         }
     }

@@ -11,7 +11,13 @@ class Progres extends Model
         'id_progres', 
         'id_modul', 
         'id_user', 
-        'presentase_progres', 
+        'presentase_progres',
+        'tanggal',
+    ];
+
+    protected $casts = [
+        'tanggal' => 'datetime',
+        'presentase_progres' => 'float',
     ];
 
     public function user()

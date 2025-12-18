@@ -1,96 +1,68 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Materi Belajar - Hangeul</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body class="bg-light">
+@extends('dashboard.dashboard')
 
-    <nav class="navbar navbar-light bg-white border-bottom sticky-top">
-        <div class="container">
-            <a class="navbar-brand fw-bold text-dark fs-6" href="{{ url('/dashboard/dashboard') }}">
-                <i class="fa-solid fa-arrow-left me-2"></i> Kembali
-            </a>
-            <span class="fw-bold text-dark">Materi Hangeul</span>
-        </div>
-    </nav>
-
-    <div class="container py-5">
-        <div class="mb-4">
-            <h3 class="fw-bold text-dark">Modul Pembelajaran</h3>
-            <p class="text-secondary small">Silakan pilih topik di bawah ini untuk mulai belajar.</p>
-        </div>
-
-        <div class="accordion" id="accordionMateri">
-            @foreach($moduls as $index => $modul)
-                <div class="accordion-item mb-3 border rounded shadow-sm overflow-hidden">
-                    <h2 class="accordion-header" id="heading{{ $modul->id_modul }}">
-                        <button class="accordion-button {{ $index != 0 ? 'collapsed' : '' }} fw-semibold" type="button" 
-                                data-bs-toggle="collapse" data-bs-target="#collapse{{ $modul->id_modul }}" 
-                                aria-expanded="{{ $index == 0 ? 'true' : 'false' }}">
-                            {{ $modul->nama_modul }}
-                        </button>
-                    </h2>
-                    <div id="collapse{{ $modul->id_modul }}" class="accordion-collapse collapse {{ $index == 0 ? 'show' : '' }}" 
-                         data-bs-parent="#accordionMateri">
-                        <div class="accordion-body bg-white">
-                            
-                            <div class="mb-3">
-                                <span class="badge bg-secondary fw-normal">{{ $modul->jenis->nama_jenis }}</span>
-                            </div>
-
-                            @if(str_contains($modul->nama_modul, 'Gabungan') || $modul->jenis->nama_jenis == 'Gabungan')
-                                
-                                <div class="row g-3">
-                                    @forelse($katas as $kata)
-                                        <div class="col-12 col-sm-6 col-md-4">
-                                            <div class="p-3 border rounded h-100 bg-light d-flex align-items-center">
-                                                <div class="me-3 bg-white p-2 rounded border text-center" style="min-width: 60px;">
-                                                    <h3 class="fw-bold text-primary mb-0">{{ $kata->hangeul }}</h3>
-                                                </div>
-                                                <div>
-                                                    <small class="text-muted d-block">Arti:</small>
-                                                    <span class="fw-bold text-dark">{{ $kata->arti }}</span>
-                                                </div>
-                                            </div>
+@section('content')
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="mb-0">Materi Belajar Hangeul</h1>
+    <a href="{{ route('dashboard') }}" class="btn btn-primary btn-sm">
+        <i class="fa-solid fa-arrow-left me-2"></i>Kembali
+    </a>
+</div>
+<div class="accordion" id="accordionMateri">
+    @foreach($moduls as $index => $modul)
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button {{ $index != 0 ? 'collapsed' : '' }}" type="button" 
+                        data-bs-toggle="collapse" data-bs-target="#collapse{{ $modul->id_modul }}" 
+                        aria-expanded="{{ $index == 0 ? 'true' : 'false' }}">
+                    <strong>{{ $modul->nama_modul }}</strong>
+                    <span class="badge bg-info ms-2">{{ $modul->jenis->nama_jenis }}</span>
+                </button>
+            </h2>
+            <div id="collapse{{ $modul->id_modul }}" class="accordion-collapse collapse {{ $index == 0 ? 'show' : '' }}" 
+                 data-bs-parent="#accordionMateri">
+                <div class="accordion-body">
+                    
+                    @if(str_contains($modul->nama_modul, 'Gabungan') || $modul->jenis->nama_jenis == 'Gabungan')
+                        
+                        <div class="row g-3">
+                            @forelse($modul->jenis->hangeul as $hangeul)
+                                <div class="col-6 col-sm-4 col-md-3">
+                                    <div class="card h-100 text-center">
+                                        <div class="card-body">
+                                            <h3 class="card-title text-primary">{{ $hangeul->hangeul }}</h3>
+                                            <p class="card-text text-muted mb-0"><strong>{{ $hangeul->pelafalan }}</strong></p>
                                         </div>
-                                    @empty
-                                        <div class="col-12 text-center py-3 text-muted">
-                                            <small>Data kata belum tersedia.</small>
-                                        </div>
-                                    @endforelse
+                                    </div>
                                 </div>
-
-                            @else
-
-                                <div class="row g-3">
-                                    @forelse($modul->jenis->hangeul as $hangeul)
-                                        <div class="col-6 col-sm-4 col-md-3">
-                                            <div class="p-3 border rounded text-center h-100 bg-light">
-                                                <h2 class="fw-bold text-dark mb-1">{{ $hangeul->hangeul }}</h2>
-                                                <small class="text-muted d-block">Dibaca:</small>
-                                                <span class="fw-bold text-primary">{{ $hangeul->pelafalan }}</span>
-                                            </div>
-                                        </div>
-                                    @empty
-                                        <div class="col-12 text-center py-3 text-muted">
-                                            <small>Data huruf belum tersedia.</small>
-                                        </div>
-                                    @endforelse
+                            @empty
+                                <div class="col-12 text-center py-3">
+                                    <p class="text-muted">Data huruf belum tersedia</p>
                                 </div>
-
-                            @endif
-
+                            @endforelse
                         </div>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    </div>
+                    @else
+                        <div class="row g-3">
+                            @forelse($modul->jenis->hangeul as $hangeul)
+                                <div class="col-6 col-sm-4 col-md-3">
+                                    <div class="card h-100 text-center">
+                                        <div class="card-body">
+                                            <h3 class="card-title text-primary">{{ $hangeul->hangeul }}</h3>
+                                            <p class="card-text text-muted mb-0"><strong>{{ $hangeul->pelafalan }}</strong></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            @empty
+                                <div class="col-12 text-center py-3">
+                                    <p class="text-muted">Data huruf belum tersedia</p>
+                                </div>
+                            @endforelse
+                        </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+                    @endif
+
+                </div>
+            </div>
+        </div>
+    @endforeach
+</div>
+@endsection

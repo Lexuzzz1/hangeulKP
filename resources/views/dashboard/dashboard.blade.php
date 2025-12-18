@@ -25,7 +25,7 @@
                             Hi, {{ Auth::user()->nama }}
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="#">Profil Saya</a></li>
+                            <li><a class="dropdown-item" href="{{ route('profile.show') }}"><i class="fa-solid fa-user me-2"></i>Profil Saya</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li>
                                 <form method="POST" action="{{ route('logout') }}">
@@ -41,7 +41,7 @@
     </nav>
 
     <div class="container py-5">
-        
+        @if(Route::currentRouteName() === 'dashboard')
         <div class="row mb-5">
             <div class="col-12">
                 <div class="card bg-white shadow-sm border-0">
@@ -54,7 +54,6 @@
         </div>
 
         <div class="row g-4">
-            
             <div class="col-md-6">
                 <div class="card h-100 border-0 shadow-sm">
                     <div class="card-body text-center p-5 d-flex flex-column justify-content-center align-items-center"> 
@@ -76,12 +75,14 @@
                         </div>
                         <h3 class="card-title fw-bold">Latihan Kuis</h3>
                         <p class="card-text text-muted fs-5">Uji pemahamanmu dengan kuis interaktif di setiap modul.</p>
-                        <a href="#" class="btn btn-warning text-white btn-lg w-100 mt-auto rounded-pill px-5">Mulai Kuis</a>
+                        <a href="{{ route('kuis.index') }}" class="btn btn-warning text-white btn-lg w-100 mt-auto rounded-pill px-5">Mulai Kuis</a>
                     </div>
                 </div>
             </div>
-
         </div>
+        @else
+            @yield('content')
+        @endif
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
